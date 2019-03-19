@@ -1,0 +1,51 @@
+logging:
+  level:
+    root: info
+    com.cloud: debug
+  file: logs/${spring.application.name}.log
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.60:3306/manage_backend?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: runa#2019
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+  rabbitmq:
+    host: 192.168.1.62
+    port: 5672
+    username: runa
+    password: runa
+    virtual-host: /
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username:
+    password:
+    protocol: smtp
+    test-connection: false
+#    properties:
+#      mail.smtp.auth: true
+  mvc:
+    servlet:
+      load-on-startup: 1
+  aop:
+    proxy-target-class: true
+  zipkin:
+    base-url: http://192.168.1.62:9411
+    enabled: true
+    sender:
+      type: web
+mybatis:
+  type-aliases-package: com.cloud.backend.model,com.cloud.model.mail
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://192.168.1.63:8080/api-o/user-me
+      prefer-token-info: false
